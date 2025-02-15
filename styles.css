@@ -21,11 +21,14 @@ button {
     color: red;
     margin-top: 20px;
 }
-.flicker_text{
-    position:fixed;
-    bottom: 80px;
-    left:580px;
-    align-items: center;
+.flicker_text {
+    position: fixed;
+    bottom: 11%; 
+    left: 42%; 
+    transform: translateX(-40%);
+    font-size: 1.2vw; 
+    text-align: center; 
+    white-space: nowrap; 
 }
 .love-audio-player {
     position: fixed; 
