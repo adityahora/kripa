@@ -23,10 +23,10 @@ button {
 }
 .flicker_text {
     position: fixed;
-    bottom: 15%; 
-    left: 33%; 
+    bottom: 13%; 
+    left: 20%; 
     transform: translateX(-40%);
-    font-size: 2vw; 
+    font-size: 3vw; 
     text-align: center; 
     display: flex;
     flex-direction: column; 
@@ -36,10 +36,10 @@ button {
 }
 .spn{
     position: fixed;
-    bottom: 17%; 
-    left: 33%; 
+    bottom: 13%; 
+    left: 20%; 
     transform: translateX(-40%);
-    font-size: 2vw; 
+    font-size: 3vw; 
     text-align: center; 
     display: flex;
     flex-direction: column; 
