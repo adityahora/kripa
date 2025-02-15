@@ -23,7 +23,7 @@ button {
 }
 .flicker_text {
     position: fixed;
-    bottom: 12%; 
+    bottom: 33%; 
     left: 12%; 
     transform: translateX(-40%);
     font-size: 2vw; 
