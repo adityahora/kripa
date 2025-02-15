@@ -111,7 +111,7 @@
         }
     </style>
 </head>
-<body style="background-color: pink;">
+<body>
 
     <div class="container">
         <h1>Hey Kripa! 💕</h1>
@@ -204,7 +204,7 @@
             currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song if at the end
             audio.src = songs[currentSongIndex];
             audio.load(); // Load the new audio file
-            audio.play(); // Start playing the new song automatically
+            audio.play(); // Start playing the new song
             playPauseBtn.innerHTML = "💖"; // Update the button
             playPauseBtn.classList.add("rotate"); // Start rotation
             seekBarFilled.style.width = "0%"; // Reset the seek bar
