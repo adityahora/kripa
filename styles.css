@@ -24,11 +24,15 @@ button {
 .flicker_text {
     position: fixed;
     bottom: 11%; 
-    left: 42%; 
+    left: 33%; 
     transform: translateX(-40%);
     font-size: 1.2vw; 
     text-align: center; 
-    white-space: nowrap; 
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center; 
+    width: 100%; 
 }
 .love-audio-player {
     position: fixed; 
