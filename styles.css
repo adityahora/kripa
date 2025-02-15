@@ -24,9 +24,9 @@ button {
 .flicker_text {
     position: fixed;
     bottom: 12%; 
-    left: 20%; 
+    left: 15%; 
     transform: translateX(-40%);
-    font-size: 6vw; 
+    font-size: 4.5vw; 
     text-align: center; 
     display: flex;
     flex-direction: column; 
@@ -34,18 +34,6 @@ button {
     justify-content: center; 
     width: 100%; 
 }
-.spn{
-    position: fixed;
-    bottom: 12%; 
-    left: 20%; 
-    transform: translateX(-40%);
-    font-size: 6vw; 
-    text-align: center; 
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center; 
-    width: 100%; 
 }
 .love-audio-player {
     position: fixed; 
