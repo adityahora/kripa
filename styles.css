@@ -1,0 +1,116 @@
+  /* Custom Audio Player Style */
+  body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: pink;
+}
+.container {
+    margin-top: 50px;
+}
+button {
+    background-color: pink;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.hidden {
+    display: none;
+    font-size: 20px;
+    color: red;
+    margin-top: 20px;
+}
+.flicker_text{
+    position:fixed;
+    bottom: 80px;
+    left:580px;
+    align-items: center;
+}
+.love-audio-player {
+    position: fixed; 
+    bottom: 20px;  
+    left: 50%;  
+    transform: translateX(-50%);  
+    display: flex;
+    align-items: center;
+    background: pink;
+    padding: 12px 20px;
+    border-radius: 20px;
+    gap: 10px;
+    box-shadow: 0px 4px 10px rgba(255, 105, 180, 0.5);
+    width: 300px;
+} 
+
+button {
+    background: #ff4d6d;
+    border: none;
+    color: white;
+    font-size: 24px;
+    padding: 10px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.message:hover{
+    background-color: #ef74a9;
+    color:white;
+}
+.playbtn:hover {
+    background: url('kripa2.jpg') center/cover no-repeat;
+}
+
+.seek-bar {
+    width: 200px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.seek-bar-filled {
+    height: 100%;
+    background: red;
+    border-radius: 5px;
+    width: 0%; /* Start with 0% width */
+}
+
+.flicker {
+    animation: flicker 1s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.rotate {
+    animation: rotate 3s linear infinite; 
+}
+
+#timeDisplay {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #d63384;
+}
+.with-image {
+    background: url('kripa.jpg') center/cover no-repeat;
+    color: transparent; /* Hide text if needed */
+}
+.with-image2 {
+    background: url('kripa2.jpg') center/cover no-repeat;
+    color: transparent; /* Hide text if needed */
+}
