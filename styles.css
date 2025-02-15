@@ -26,7 +26,7 @@ button {
     bottom: 12%; 
     left: 15%; 
     transform: translateX(-40%);
-    font-size: 4.5vw; 
+    font-size: 2vw; 
     text-align: center; 
     display: flex;
     flex-direction: column; 
