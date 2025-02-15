@@ -11,7 +11,7 @@
         var songs = [
             "prettyboy.mp3", 
             "gluesong.mp3", // Add the actual file paths for your next songs
-            "song3.mp3"
+            "fadeintoyou.mp3"
         ];
         var currentSongIndex = 0;
         audio.addEventListener("ended", nextSong);
