@@ -7,34 +7,32 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <div class="container">
-        <h1>Hey Kripa! 💕</h1>
-        <p>Click the button below for a surprise!</p>
-        <button onclick="showMessage()" class="message">Click Me! 💌</button>
-        
-        
+    <body>
     
-        <div class="flicker_text">
-            <p id="flick" style="color:red;" class="flicker">
-                click the heart!!!</p>
-        </div>
-        
-        <div class="love-audio-player">
-            <button class="playbtn" id="playPauseBtn" onclick="hover_text()">❤️</button>
-            <button class="playbtn" id="nextBtn" onclick="nextSong()">➡️</button>
-            <span id="timeDisplay" class="hidden">00:00</span>
-            <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
-                <div class="seek-bar-filled" id="seek-bar-filled"></div>
+        <div class="container">
+            <h1>Hey Kripa! 💕</h1>
+            <p>Click the button below for a surprise!</p>
+            <button onclick="showMessage()">Click Me! 💌</button>
+            
+            <div class="flicker_text">
+                <p><span id="xd" style="color: hotpink;"></span></p>
+                <p id="flick" style="color:red;" class="flicker">click the heart!!!</p>
             </div>
-            <audio id="audio">
-                <source src="prettyboy.mp3" type="audio/mpeg">
-            </audio>
+            
+            <div class="love-audio-player">
+                <button id="playPauseBtn" onclick="hover_text()">❤️</button>
+                <button id="nextBtn" onclick="nextSong()">➡️</button>
+                <span id="timeDisplay" class="hidden">00:00</span>
+                <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
+                    <div class="seek-bar-filled" id="seek-bar-filled"></div>
+                </div>
+                <audio id="audio">
+                    <source src="prettyboy.mp3" type="audio/mpeg">
+                </audio>
+            </div>
+            
+            <p id="message" class="hidden">You're the love of my life! 😘</p>
         </div>
-        
-        <p id="message" class="hidden">You're the love of my life! 😘</p>
-    </div>
     <script src="scripts.js"></script>
-
 </body>
 </html>
