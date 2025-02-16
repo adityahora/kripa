@@ -145,7 +145,7 @@ button {
 .playbtn:hover {
     background: url('kripa.jpg') center/cover no-repeat;
 }
-.nxtBtn:hover {
+#nextBtn:hover {
     background: url('kripa.jpg') center/cover no-repeat;
 }
 
