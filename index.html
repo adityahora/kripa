@@ -14,12 +14,12 @@
             <button onclick="showMessage()">Click Me! 💌</button>
             
             <div class="flicker_text">
-                <p id="flick" style="color:red; font-size:20px;" class="flicker">click the heart!!!</p>
+                <p id="flick" style="color:red; font-size: 20px;" class="flicker">click the heart!!!</p>
             </div>
             
             <div class="love-audio-player">
-                <button id="playPauseBtn" onclick="hover_text()">❤️</button>
-                <button id="nextBtn" onclick="nextSong()">➡️</button>
+                <button class="nxtBtn" id="playPauseBtn" onclick="hover_text()">❤️</button>
+                <button class="nxtBtn" id="nextBtn" onclick="nextSong()">➡️</button>
                 <span id="timeDisplay" class="hidden">00:00</span>
                 <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
                     <div class="seek-bar-filled" id="seek-bar-filled"></div>
@@ -29,7 +29,7 @@
                 </audio>
             </div>
             
-            <p id="message" class="hidden">You're the love of my life! 😘</p>
+            <p id="message" class="hidden">You're the love of my life!</p>
         </div>
     <script src="scripts.js"></script>
 </body>
