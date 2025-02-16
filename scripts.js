@@ -66,8 +66,8 @@
             currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song if at the end
             audio.src = songs[currentSongIndex];
             audio.load(); // Load the new audio file
-            audio.play(); // Start playing the new song
-            playPauseBtn.innerHTML = "💖"; // Update the button
+            audio.play(); 
+            playPauseBtn.classList.add("with-image");// Update the button
             playPauseBtn.classList.add("rotate"); // Start rotation
             seekBarFilled.style.width = "0%"; // Reset the seek bar
             timeDisplay.innerText = "00:00"; // Reset the time display
