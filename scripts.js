@@ -65,7 +65,7 @@
         
         // Function to load the next song
         function nextSong() {
-playPauseBtn.classList.add("with-image");
+document.getElementById("nextBtn").classList.add("with-image);
             currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song if at the end
             audio.src = songs[currentSongIndex];
             audio.load(); // Load the new audio file
