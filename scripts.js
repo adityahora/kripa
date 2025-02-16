@@ -75,25 +75,32 @@
             timeDisplay.innerText = "00:00"; // Reset the time display
         }
         
-        let currentSlide = 0;
-        const slides = document.querySelectorAll(".slide");
+         var currentSlide = 0;
+        var slides = document.querySelectorAll(".slide"); // Select all slides
         
         function showSlide(index) {
             slides.forEach((slide, i) => {
                 slide.classList.remove("active");
-                if (i === index) {
-                    slide.classList.add("active");
-                }
+                if (i === index) slide.classList.add("active");
             });
+        
+            // Hide/show buttons dynamically
+            document.getElementById("prevBtn").classList.toggle("hidden", index === 0);
+            document.getElementById("nxtBtn").classList.toggle("hidden", index === slides.length - 1);
         }
         
         function nextSlide() {
-            document.getElementById("prevBtn").classList.remove("hidden");
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
         }
         
         function prevSlide() {
-            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-            showSlide(currentSlide);
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
         }
+        
+        showSlide(currentSlide);
