@@ -23,7 +23,6 @@
         // Function to show and hide seek bar and time display after heart is clicked
         function hover_text() {
             document.getElementById("flick").innerHTML = "";
-            document.getElementById("xd").innerHTML = "YAYYYY!!!!";
             document.getElementById("seekBar").style.display = "block";
             document.getElementById("timeDisplay").style.display = "block";
 
