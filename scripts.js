@@ -9,6 +9,7 @@
 
         // Array of songs (you can add as many as you like)
         var songs = [
+            "japansenedemin.mp3",
             "prettyboy.mp3", 
             "gluesong.mp3", // Add the actual file paths for your next songs
             "fadeintoyou.mp3"
@@ -22,9 +23,11 @@
 
         // Function to show and hide seek bar and time display after heart is clicked
         function hover_text() {
+            document.getElementById("nextBtn").classList.remove("hidden");
+            document.getElementById("timeDisplay").classList.remove("hidden");
             document.getElementById("flick").innerHTML = "";
             document.getElementById("seekBar").style.display = "block";
-            document.getElementById("timeDisplay").style.display = "block";
+            // document.getElementById("timeDisplay").style.display = "block";
 
         }
 
@@ -62,7 +65,6 @@
         
         // Function to load the next song
         function nextSong() {
-        
             currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song if at the end
             audio.src = songs[currentSongIndex];
             audio.load(); // Load the new audio file
@@ -71,4 +73,27 @@
             playPauseBtn.classList.add("rotate"); // Start rotation
             seekBarFilled.style.width = "0%"; // Reset the seek bar
             timeDisplay.innerText = "00:00"; // Reset the time display
+        }
+        
+        let currentSlide = 0;
+        const slides = document.querySelectorAll(".slide");
+        
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove("active");
+                if (i === index) {
+                    slide.classList.add("active");
+                }
+            });
+        }
+        
+        function nextSlide() {
+            document.getElementById("prevBtn").classList.remove("hidden");
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(currentSlide);
         }
