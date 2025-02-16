@@ -9,7 +9,7 @@
 
         // Array of songs (you can add as many as you like)
         var songs = [
-            "japansenedemin.mp3",
+            "japanesedemin.mp3",
             "prettyboy.mp3", 
             "gluesong.mp3", // Add the actual file paths for your next songs
             "fadeintoyou.mp3"
