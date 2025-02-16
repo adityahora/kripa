@@ -67,6 +67,9 @@ button {
 .playbtn:hover {
     background: url('kripa.jpg') center/cover no-repeat;
 }
+.nxtBtn:hover {
+    background: url('kripa.jpg') center/cover no-repeat;
+}
 
 .seek-bar {
     width: 200px;
