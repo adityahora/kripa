@@ -10,26 +10,29 @@
     <body>
     
         <div class="container">
-            <h1>Hey Kripa! 💕</h1>
-            <button onclick="showMessage()">Click Me! 💌</button>
-            
-            <div class="flicker_text">
-                <p id="flick" style="color:red; font-size: 20px;" class="flicker">click the heart!!!</p>
+            <div class="slideshow-container">
+                <div class="slide active">Hi Kripa! Just wanted you to know that<span class="sparkle" style="top: 10px; left: 50px;"></span></div>
+                <div class="slide">You make every moment special <33 <span class="sparkle" style="top: 30px; left: 100px;"></span></div>
+                <div class="slide">Being with you is the best part of my life (too real 😩)<span class="sparkle" style="top: 20px; left: 150px;"></span></div>
+                <div class="slide">I love you soooo muchhhhhh!  <span class="sparkle" style="top: 50px; left: 200px;"></span></div>
+                <div class="slide">Forever and always, Aaditya ❤️ <span class="sparkle" style="top: 70px; left: 250px;"></span></div>
+                <div class="slide">Happy Birthday my sweet sweet babyyy!!!!<span class="sparkle" style="top: 10px; left: 50px;"></span></div>
+                <div class="nav-buttons">
+                    <button id="prevBtn" onclick="prevSlide()" class="hidden">&#10094; Prev</button>
+                    <button onclick="nextSlide()">Next &#10095;</button>
+                </div>
             </div>
-            
             <div class="love-audio-player">
                 <button class="nxtBtn" id="playPauseBtn" onclick="hover_text()">❤️</button>
-                <button class="nxtBtn" id="nextBtn" onclick="nextSong()">➡️</button>
+                <button class="hidden" id="nextBtn" onclick="nextSong()">➡️</button>
                 <span id="timeDisplay" class="hidden">00:00</span>
                 <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
                     <div class="seek-bar-filled" id="seek-bar-filled"></div>
                 </div>
                 <audio id="audio">
-                    <source src="prettyboy.mp3" type="audio/mpeg">
+                    <source src="japanesedemin.mp3" type="audio/mpeg">
                 </audio>
             </div>
-            
-            <p id="message" class="hidden">You're the love of my life!</p>
         </div>
     <script src="scripts.js"></script>
 </body>
