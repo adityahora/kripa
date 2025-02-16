@@ -75,7 +75,7 @@
             timeDisplay.innerText = "00:00"; // Reset the time display
         }
         
-         var currentSlide = 0;
+        var currentSlide = 0;
         var slides = document.querySelectorAll(".slide"); // Select all slides
         
         function showSlide(index) {
