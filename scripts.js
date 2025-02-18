@@ -10,7 +10,9 @@
         // Array of songs (you can add as many as you like)
         var songs = [
             "japanesedemin.mp3",
-            "prettyboy.mp3", 
+            "prettyboy.mp3",
+            "overthemoon.mp3",
+            "getyou.mp3", 
             "gluesong.mp3", // Add the actual file paths for your next songs
             "fadeintoyou.mp3"
         ];
@@ -24,6 +26,7 @@
         // Function to show and hide seek bar and time display after heart is clicked
         function hover_text() {
             document.getElementById("nextBtn").classList.remove("hidden");
+            document.getElementById("previousBtn").classList.remove("hidden");
             document.getElementById("timeDisplay").classList.remove("hidden");
             document.getElementById("flick").innerHTML = "";
             document.getElementById("seekBar").style.display = "block";
@@ -64,8 +67,20 @@
         }
         
         // Function to load the next song
+        function prevSong() {
+            document.getElementById("previousBtn").classList.add("with-image4");
+            currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length; // Loop back to the first song if at the end
+            audio.src = songs[currentSongIndex];
+            audio.load(); // Load the new audio file
+            audio.play(); 
+            playPauseBtn.classList.add("with-image");// Update the button
+            playPauseBtn.classList.add("rotate"); // Start rotation
+            seekBarFilled.style.width = "0%"; // Reset the seek bar
+            timeDisplay.innerText = "00:00"; // Reset the time display
+        }
+
         function nextSong() {
-document.getElementById("nextBtn").classList.add("with-image");
+            document.getElementById("nextBtn").classList.add("with-image3");
             currentSongIndex = (currentSongIndex + 1) % songs.length; // Loop back to the first song if at the end
             audio.src = songs[currentSongIndex];
             audio.load(); // Load the new audio file
