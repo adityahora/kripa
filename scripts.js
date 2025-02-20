@@ -97,6 +97,7 @@ let slideIndex = 0;
       slideIndex = (n + slides.length) % slides.length;
       slides[slideIndex].style.display = "block";
       dots[slideIndex].classList.add("active");
+      document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
     }
 
     function changeSlide(n) {
