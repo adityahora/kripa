@@ -53,6 +53,7 @@ playPauseBtn.addEventListener("click", () => {
     audio.play();
     previousBtn.classList.remove("hidden");
     nextBtn.classList.remove("hidden");
+    document.getElementById("flick").classList.add("hidden");
     timeDisplay.classList.remove("hidden");
     seekBar.style.display = "block";
   } else {
