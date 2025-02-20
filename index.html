@@ -9,19 +9,48 @@
 <body>
     <body>
     
-        <div class="container">
-            <div class="slideshow-container">
-                <div class="slide active">Hi Kripa! Just wanted you to know that<span class="sparkle" style="top: 10px; left: 50px;"></span></div>
-                <div class="slide">You make every moment special <33 <span class="sparkle" style="top: 30px; left: 100px;"></span></div>
-                <div class="slide">Being with you is the best part of my life (too real 😩)<span class="sparkle" style="top: 20px; left: 150px;"></span></div>
-                <div class="slide">I love you soooo muchhhhhh!  <span class="sparkle" style="top: 50px; left: 200px;"></span></div>
-                <div class="slide">Forever and always, Aaditya ❤️ <span class="sparkle" style="top: 70px; left: 250px;"></span></div>
-                <div class="slide">Happy Birthday my sweet sweet babyyy!!!!<span class="sparkle" style="top: 10px; left: 50px;"></span></div>
-                <div class="nav-buttons">
-                    <button id="prevBtn" onclick="prevSlide()" class="hidden">&#10094; Prev</button>
-                    <button id="nxtBtn" onclick="nextSlide()">Next &#10095;</button>
-                </div>
+        <div id="messageBox" class="message-box">
+            <div class="message-content">
+              <p id="messageText">Ahem! Ahem! So Read this carefully kripa babes!
+                After you press the close button the slideshow starts. The slideshow is 
+                automatic hence changes by itself within a certain time interval, but you can 
+                also go on next and previous image by clicking on left and right side of images 
+                respectfully. Also you can pause the slideshow by clicking on the middle of the 
+                image. Enjoyyyy!!!! <br><br>
+                PS : Click the heart below for better experience <br> <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Love Aaditya
+              </p>
+              <button id="closeButton">Close</button>
             </div>
+          </div>
+        
+          <!-- Slideshow -->
+          <div class="slideshow-container">
+            <div class="slide">
+              <img src="./kripa.jpg" alt="Slide 1" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+            </div>
+            <div class="slide">
+              <img src="./kripabg.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+            </div>
+            <div class="slide">
+              <img src="./kripaaudioplayer.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+            </div>
+        
+            <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+            <button class="pause-btn" onclick="togglePause()"></button>
+            <a class="next" onclick="changeSlide(1)">&#10095;</a>
+          </div>
+        
+          <div class="dots">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+          </div>
             
             <div class="flicker_text">
                 <p id="flick" style="color:red; font-size:20px;" class="flicker">click the heart!!!</p>
