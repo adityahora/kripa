@@ -8,7 +8,6 @@ const prevBtn = document.getElementById("previousBtn");
 const seekBar = document.getElementById("seekBar");
 const flick = document.getElementById("flick");
 const message = document.getElementById("message");
-const slides = document.querySelectorAll(".slide");
 const progressBar = document.querySelector(".seek-bar");
 
 // Song data
@@ -21,7 +20,6 @@ const songs = [
   "gluesong.mp3",
 ];
 let currentSongIndex = 0;
-let currentSlide = 0;
 
 // Helper Functions
 const updatePlayPauseButton = (isPlaying) => {
@@ -51,9 +49,18 @@ const formatTime = (time) => {
 
 // Event Listeners
 playPauseBtn.addEventListener("click", () => {
-  audio.paused ? audio.play() : audio.pause();
+  if (audio.paused) {
+    audio.play();
+    previousBtn.classList.remove("hidden");
+    nextBtn.classList.remove("hidden");
+    timeDisplay.classList.remove("hidden");
+    seekBar.style.display = "block";
+  } else {
+    audio.pause();
+  }
   updatePlayPauseButton(!audio.paused);
 });
+
 
 audio.addEventListener("timeupdate", () => {
   const progress = (audio.currentTime / audio.duration) * 100;
@@ -75,30 +82,69 @@ const changeSong = (direction) => {
   loadSong(currentSongIndex);
   document.getElementById(direction === 1 ? "nextBtn" : "previousBtn").classList.add(direction === 1 ? "with-image3" : "with-image4");
 };
+let slideIndex = 0;
+    let slideInterval;
+    let autoplayPaused = true; // Autoplay starts as paused until user closes the message
 
-// Slide Functions
-const showSlide = (index) => {
-  slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
-  document.getElementById("prevBtn").classList.toggle("hidden", index === 0);
-  document.getElementById("nxtBtn").classList.toggle("hidden", index === slides.length - 1);
-};
+    const slides = document.getElementsByClassName("slide");
+    const dots = document.getElementsByClassName("dot");
 
-document.getElementById("nxtBtn").addEventListener("click", () => updateSlide(1));
-document.getElementById("prevBtn").addEventListener("click", () => updateSlide(-1));
+    function showSlide(n) {
+      for (const slide of slides) slide.style.display = "none";
+      for (const dot of dots) dot.classList.remove("active");
 
-const updateSlide = (direction) => {
-  currentSlide = Math.min(Math.max(currentSlide + direction, 0), slides.length - 1);
-  showSlide(currentSlide);
-};
+      slideIndex = (n + slides.length) % slides.length;
+      slides[slideIndex].style.display = "block";
+      dots[slideIndex].classList.add("active");
+    }
 
-// UI Interaction Functions
-const showMessage = () => message.style.display = "block";
+    function changeSlide(n) {
+      clearInterval(slideInterval); // Stop autoplay while manually changing
+      showSlide(slideIndex + n);
+      if (!autoplayPaused) startAutoSlide(); // Restart autoplay if it's active
+    }
 
-const hover_text = () => {
-  [nextBtn, prevBtn, timeDisplay].forEach(el => el.classList.remove("hidden"));
-  flick.innerHTML = "";
-  seekBar.style.display = "block";
-};
+    function currentSlide(n) {
+      clearInterval(slideInterval);
+      showSlide(n - 1);
+      if (!autoplayPaused) startAutoSlide();
+    }
 
-// Initialization
-showSlide(currentSlide);
+    function startAutoSlide() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(() => showSlide(slideIndex + 1), 3000);
+    }
+
+    function togglePause() {
+      autoplayPaused = !autoplayPaused;
+      const pauseButton = document.querySelector('.pause-btn');
+
+      if (autoplayPaused) {
+        clearInterval(slideInterval);
+        pauseButton.innerText = '||'; // Play icon
+      } else {
+        startAutoSlide();
+        pauseButton.innerText = '▶'; // Pause icon
+      }
+
+      pauseButton.style.opacity = '1';
+      setTimeout(() => pauseButton.style.opacity = '0', 700);
+    }
+
+    window.onload = function() {
+      showSlide(slideIndex); // Show first slide but no autoplay yet
+
+      const messageBox = document.getElementById('messageBox');
+      const closeButton = document.getElementById('closeButton');
+
+      // Disable scroll before closing the message
+      document.body.style.overflow = 'hidden';
+
+      closeButton.addEventListener('click', () => {
+        messageBox.style.display = 'none';
+        document.body.style.overflow = ''; // Re-enable scrolling
+
+        autoplayPaused = false;  // Allow autoplay
+        startAutoSlide();        // Start autoplay now
+      });
+    };
