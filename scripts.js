@@ -368,9 +368,9 @@ function drawHearts() {
 function update() {
   if (!gamePaused) {
     frame++;
-    if (frame % 240 === 0) spawnHeart();
+    if (frame % 320 === 0) spawnHeart();
 
-    hearts.forEach(h => h.x -= 1.9);
+    hearts.forEach(h => h.x -= 3);
     hearts = hearts.filter(h => h.x + h.size > 0);
 
     hearts.forEach((h, i) => {
