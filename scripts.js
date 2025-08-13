@@ -213,7 +213,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 80, height: 80, speed: 9 };
+let player = { x: 50, y: 300, width: 200, height: 200, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -328,7 +328,7 @@ function spawnHeart() {
   hearts.push({
     x: canvas.width,
     y: Math.random() * (canvas.height - 50),
-    size: 40
+    size: 100
   });
 }
 
@@ -482,3 +482,4 @@ playerImg.onload = () => {
     gameLoop();  // start the game loop after images are loaded
   }
 }
+
