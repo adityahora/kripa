@@ -1,4 +1,3 @@
-// Cached DOM elements for better performance
 const audio = document.getElementById("audio");
 const seekBarFilled = document.getElementById("seek-bar-filled");
 const timeDisplay = document.getElementById("timeDisplay");
@@ -51,9 +50,9 @@ const formatTime = (time) => {
 playPauseBtn.addEventListener("click", () => {
   if (audio.paused) {
     audio.play();
-    previousBtn.classList.remove("hidden");
-    nextBtn.classList.remove("hidden");
+    prevBtn.classList.remove("hidden");
     document.getElementById("flick").classList.add("hidden");
+    nextBtn.classList.remove("hidden");
     timeDisplay.classList.remove("hidden");
     seekBar.style.display = "block";
   } else {
@@ -61,7 +60,6 @@ playPauseBtn.addEventListener("click", () => {
   }
   updatePlayPauseButton(!audio.paused);
 });
-
 
 audio.addEventListener("timeupdate", () => {
   const progress = (audio.currentTime / audio.duration) * 100;
@@ -83,70 +81,415 @@ const changeSong = (direction) => {
   loadSong(currentSongIndex);
   document.getElementById(direction === 1 ? "nextBtn" : "previousBtn").classList.add(direction === 1 ? "with-image3" : "with-image4");
 };
+
+// Slideshow setup
 let slideIndex = 0;
-    let slideInterval;
-    let autoplayPaused = true; // Autoplay starts as paused until user closes the message
+let slideInterval;
+let autoplayPaused = true; // Start paused
 
-    const slides = document.getElementsByClassName("slide");
-    const dots = document.getElementsByClassName("dot");
+const slides = document.getElementsByClassName("slide");
+const dots = document.getElementsByClassName("dot");
 
-    function showSlide(n) {
-      for (const slide of slides) slide.style.display = "none";
-      for (const dot of dots) dot.classList.remove("active");
-
-      slideIndex = (n + slides.length) % slides.length;
-      slides[slideIndex].style.display = "block";
-      dots[slideIndex].classList.add("active");
-      document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
+function showSlide(n) {
+  for (const slide of slides) {
+    // Pause any video in hidden slides
+    const video = slide.querySelector("video");
+    if (video) {
+      video.pause();
+      video.currentTime = 0;
     }
 
-    function changeSlide(n) {
-      clearInterval(slideInterval); // Stop autoplay while manually changing
-      showSlide(slideIndex + n);
-      if (!autoplayPaused) startAutoSlide(); // Restart autoplay if it's active
-    }
+    // Remove fade class and hide
+    slide.classList.remove("fade-in");
+    slide.style.display = "none";
+  }
 
-    function currentSlide(n) {
-      clearInterval(slideInterval);
-      showSlide(n - 1);
-      if (!autoplayPaused) startAutoSlide();
-    }
+  for (const dot of dots) dot.classList.remove("active");
 
-    function startAutoSlide() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(() => showSlide(slideIndex + 1), 3000);
-    }
+  slideIndex = (n + slides.length) % slides.length;
+  const currentSlide = slides[slideIndex];
+  currentSlide.style.display = "block";
+  void currentSlide.offsetWidth; // Trigger reflow for CSS animation
+  currentSlide.classList.add("fade-in");
 
-    function togglePause() {
-      autoplayPaused = !autoplayPaused;
-      const pauseButton = document.querySelector('.pause-btn');
+  dots[slideIndex].classList.add("active");
 
-      if (autoplayPaused) {
-        clearInterval(slideInterval);
-        pauseButton.innerText = '||'; // Play icon
-      } else {
-        startAutoSlide();
-        pauseButton.innerText = '▶'; // Pause icon
-      }
+  // Handle caption display
+  const caption = document.getElementById("caption");
+  caption.innerText = currentSlide.getAttribute("data-caption") || "";
+  caption.classList.add("show");
 
-      pauseButton.style.opacity = '1';
-      setTimeout(() => pauseButton.style.opacity = '0', 700);
-    }
-
-    window.onload = function() {
-      showSlide(slideIndex); // Show first slide but no autoplay yet
-
-      const messageBox = document.getElementById('messageBox');
-      const closeButton = document.getElementById('closeButton');
-
-      // Disable scroll before closing the message
-      document.body.style.overflow = 'hidden';
-
-      closeButton.addEventListener('click', () => {
-        messageBox.style.display = 'none';
-        document.body.style.overflow = ''; // Re-enable scrolling
-
-        autoplayPaused = false;  // Allow autoplay
-        startAutoSlide();        // Start autoplay now
+  // Autoplay video if present
+  const currentVideo = currentSlide.querySelector("video");
+  if (currentVideo) {
+    currentVideo.muted = false;
+    const playPromise = currentVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.warn("Autoplay with sound blocked:", error);
       });
+    }
+  }
+
+  // Handle hiding pslide if needed
+  document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
+}
+
+function changeSlide(n) {
+  clearInterval(slideInterval); // Stop autoplay while manually changing
+  showSlide(slideIndex + n);
+  if (!autoplayPaused) startAutoSlide(); // Restart autoplay if it's active
+}
+
+function currentSlide(n) {
+  clearInterval(slideInterval);
+  showSlide(n - 1);
+  if (!autoplayPaused) startAutoSlide();
+}
+
+function startAutoSlide() {
+  clearInterval(slideInterval);
+  slideInterval = setInterval(() => showSlide(slideIndex + 1), 10000);
+}
+
+function togglePause() {
+  autoplayPaused = !autoplayPaused;
+  const pauseButton = document.querySelector('.pause-btn');
+
+  const currentSlide = slides[slideIndex];
+  const currentVideo = currentSlide.querySelector("video");
+
+  if (autoplayPaused) {
+    clearInterval(slideInterval);
+    pauseButton.innerText = '||'; // Play icon
+
+    // Pause the video if present
+    if (currentVideo && !currentVideo.paused) {
+      currentVideo.pause();
+    }
+  } else {
+    startAutoSlide();
+    pauseButton.innerText = '▶'; // Pause icon
+
+    // Resume video playback if present
+    if (currentVideo && currentVideo.paused) {
+      currentVideo.play().catch(err => {
+        console.warn("Video couldn't autoplay on resume:", err);
+      });
+    }
+  }
+
+  pauseButton.style.opacity = '1';
+  setTimeout(() => pauseButton.style.opacity = '0', 700);
+}
+
+window.onload = function() {
+  // Show first slide but do NOT autoplay yet
+  showSlide(slideIndex);
+
+  const messageBox = document.getElementById('messageBox');
+  const closeButton = document.getElementById('closeButton');
+
+  // Disable scroll before closing the message
+  document.body.style.overflow = 'hidden';
+
+  closeButton.addEventListener('click', () => {
+    messageBox.style.display = 'none';
+    document.body.style.overflow = ''; // Re-enable scrolling
+
+    // Autoplay still paused at start, no auto slide here
+    // User starts slideshow manually after game ends
+  });
+};
+let dragging = false;
+let dragOffsetX = 0;
+let dragOffsetY = 0;
+
+// --- Game variables ---
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+const questionBox = document.getElementById("questionBox");
+const questionText = document.getElementById("questionText");
+const choicesDiv = document.getElementById("choices");
+const feedback = document.getElementById("feedback");
+
+let player = { x: 50, y: 300, width: 80, height: 80, speed: 9 };
+let hearts = [];
+let score = 0;
+let frame = 0;
+let currentQuestionIndex = 0;
+let gamePaused = false;
+
+// Mouse drag start
+canvas.addEventListener('mousedown', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  // Check if mouse is inside the player box
+  if (mouseX >= player.x && mouseX <= player.x + player.width &&
+      mouseY >= player.y && mouseY <= player.y + player.height) {
+    dragging = true;
+    dragOffsetX = mouseX - player.x;
+    dragOffsetY = mouseY - player.y;
+  }
+});
+
+// Mouse drag move
+canvas.addEventListener('mousemove', (e) => {
+  if (!dragging) return;
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = e.clientX - rect.left;
+  const mouseY = e.clientY - rect.top;
+
+  player.x = mouseX - dragOffsetX;
+  player.y = mouseY - dragOffsetY;
+
+  clampPlayerPosition();
+});
+
+// Mouse drag end
+canvas.addEventListener('mouseup', () => {
+  dragging = false;
+});
+
+canvas.addEventListener('mouseleave', () => {
+  dragging = false;
+});
+
+// Touch drag start
+canvas.addEventListener('touchstart', (e) => {
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const touchX = touch.clientX - rect.left;
+  const touchY = touch.clientY - rect.top;
+
+  if (touchX >= player.x && touchX <= player.x + player.width &&
+      touchY >= player.y && touchY <= player.y + player.height) {
+    dragging = true;
+    dragOffsetX = touchX - player.x;
+    dragOffsetY = touchY - player.y;
+  }
+});
+
+// Touch drag move
+canvas.addEventListener('touchmove', (e) => {
+  if (!dragging) return;
+  e.preventDefault(); // Prevent scrolling while dragging
+
+  const rect = canvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const touchX = touch.clientX - rect.left;
+  const touchY = touch.clientY - rect.top;
+
+  player.x = touchX - dragOffsetX;
+  player.y = touchY - dragOffsetY;
+
+  clampPlayerPosition();
+});
+
+// Touch drag end
+canvas.addEventListener('touchend', () => {
+  dragging = false;
+});
+
+canvas.addEventListener('touchcancel', () => {
+  dragging = false;
+});
+
+// Placeholder questions
+const questions = [
+  {
+    text: "When did we start dating?",
+    choices: ["September 1", "October 1", "November 1"],
+    correct: 1
+  },
+  {
+    text: "How long have we been dating?",
+    choices: ["10 months+", "11 months+", "1 year+"],
+    correct: 0
+  },
+  {
+    text: "What was the first text I sent you after 2 years?",
+    choices: ["what's up", "thank you for existing", "i miss you"],
+    correct: 1
+  },
+  {
+    text: "When did we start liking each other?",
+    choices: ["2021", "2022", "2023"],
+    correct: 0
+  },
+  {
+    text: "What's my favourite song?",
+    choices: ["Let Down", "Lover you should have come over", "Najeek"],
+    correct: 2
+  }
+
+  
+];
+const playerImg = new Image();
+playerImg.src = "player.png";  // put the correct path
+
+const heartImg = new Image();
+heartImg.src = "heart.png";    // put the correct path
+
+// Create hearts
+function spawnHeart() {
+  hearts.push({
+    x: canvas.width,
+    y: Math.random() * (canvas.height - 50),
+    size: 40
+  });
+}
+
+function drawPlayer() {
+  ctx.save(); // Save current canvas state
+  
+  // Create a circular clipping region
+  ctx.beginPath();
+  ctx.arc(player.x + player.width / 2, player.y + player.height / 2, player.width / 2, 0, Math.PI * 2);
+  ctx.clip();
+
+  // Draw the image clipped inside the circle
+  ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
+
+  ctx.restore(); // Restore canvas state (removes clipping)
+}
+
+
+function drawHearts() {
+  ctx.fillStyle = "pink"; // fallback color if image not loaded yet
+  hearts.forEach(h => {
+    ctx.save();
+
+    ctx.beginPath();
+    ctx.arc(h.x, h.y, h.size, 0, Math.PI * 2);
+    ctx.clip();
+
+    // Draw the heart image centered at (h.x, h.y) with width/height = 2 * size
+    ctx.drawImage(heartImg, h.x - h.size, h.y - h.size, h.size * 2, h.size * 2);
+
+    ctx.restore();
+  });
+}
+
+
+// Update game
+function update() {
+  if (!gamePaused) {
+    frame++;
+    if (frame % 240 === 0) spawnHeart();
+
+    hearts.forEach(h => h.x -= 1.9);
+    hearts = hearts.filter(h => h.x + h.size > 0);
+
+    hearts.forEach((h, i) => {
+      if (player.x < h.x + h.size &&
+          player.x + player.width > h.x &&
+          player.y < h.y + h.size &&
+          player.y + player.height > h.y) {
+        score++;
+        hearts.splice(i, 1);
+        if (score % 5 === 0) showQuestion();
+
+        if(score === 26){
+          // End game and show slideshow
+          document.getElementById("gameContainer").style.display = 'none';
+
+          document.getElementById('slideshowContainer').style.display = 'block';
+          document.getElementById('dots').style.display = 'block';
+
+
+          // Show first slide and start autoplay
+          autoplayPaused = false;
+          showSlide(0);
+          startAutoSlide();
+        }
+      }
+    });
+  }
+}
+function clampPlayerPosition() {
+  if (player.x < 0) player.x = 0;
+  if (player.y < 0) player.y = 0;
+  if (player.x + player.width > canvas.width) player.x = canvas.width - player.width;
+  if (player.y + player.height > canvas.height) player.y = canvas.height - player.height;
+}
+
+// Render game
+function render() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawPlayer();
+  drawHearts();
+  ctx.fillStyle = "black";
+  ctx.fillText("Hearts: " + score, 10, 20);
+}
+let gameRunning = false;
+
+const closeButton = document.getElementById('closeButton');
+closeButton.addEventListener('click', () => {
+  document.getElementById('messageBox').style.display = 'none';
+  document.body.style.overflow = ''; // Enable scroll
+  gameRunning = true; // Flag to start game loop
+  gameLoop();         // Start the game loop now
+});
+// Game loop
+function gameLoop() {
+  if (!gameRunning) return;  // Stop game until started
+  update();
+  render();
+  requestAnimationFrame(gameLoop);
+}
+
+// Show question popup
+function showQuestion() {
+  gamePaused = true;
+  const q = questions[currentQuestionIndex % questions.length];
+  questionText.textContent = q.text;
+  choicesDiv.innerHTML = "";
+  feedback.classList.add("hidden");
+
+  q.choices.forEach((choice, i) => {
+    const btn = document.createElement("button");
+    btn.textContent = choice;
+    btn.onclick = () => {
+      if (i === q.correct) {
+        currentQuestionIndex++;
+        questionBox.classList.add("hidden");
+        gamePaused = false;
+        if (score >= 26) endGame();
+      } else {
+        feedback.textContent = "😢 Try again!";
+        feedback.classList.remove("hidden");
+      }
     };
+    choicesDiv.appendChild(btn);
+  });
+
+  questionBox.classList.remove("hidden");
+}
+
+// End game function just hides game and shows slideshow, unused now because handled above
+function endGame() {
+  document.getElementById("gameContainer").style.display = 'none';
+  document.querySelector('.slideshow-container').style.display = 'block';
+
+  autoplayPaused = false;
+  showSlide(0);
+  startAutoSlide();
+}
+
+// Controls
+window.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") player.x += player.speed;
+  if (e.key === "ArrowLeft") player.x -= player.speed;
+  if (e.key === "ArrowUp") player.y -= player.speed;
+  if (e.key === "ArrowDown") player.y += player.speed;
+});
+
+playerImg.onload = () => {
+  heartImg.onload = () => {
+    gameLoop();  // start the game loop after images are loaded
+  }
+}
+
