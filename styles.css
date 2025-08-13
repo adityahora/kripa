@@ -334,12 +334,27 @@
       /* --- your existing CSS here --- */
 
 /* GAME CANVAS */
+#gameContainer {
+  width: 90%;
+  max-width: 600px;  /* smaller max width for phones */
+  margin: 20px auto;  /* center with some margin */
+  position: relative;
+}
 #gameCanvas {
-border: 2px solid white;
-border-radius: 10px;
-background-color: #fcd5ce;
-display: block;
-margin: auto;
+  width: 100% !important;  /* full width of container */
+  height: auto !important; /* maintain aspect ratio */
+  max-height: 400px;       /* keep max height */
+  border: 2px solid white;
+  border-radius: 10px;
+  background-color: #fcd5ce;
+  display: block;
+}
+
+/* Optional: limit player's movement bounds on smaller screens */
+@media (max-width: 480px) {
+  #gameCanvas {
+    max-height: 300px;
+  }
 }
 
 /* QUESTION BOX */
