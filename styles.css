@@ -353,7 +353,7 @@
 /* Optional: limit player's movement bounds on smaller screens */
 @media (max-width: 480px) {
   #gameCanvas {
-    max-height: 300px;
+    max-height: 520px;
   }
 }
 
@@ -386,3 +386,4 @@ font-size: 16px;
 .hidden {
 display: none;
 }
+
