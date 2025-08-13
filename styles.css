@@ -1,305 +1,373 @@
- 
-       * {
-        box-sizing: border-box;
+     
+     * {
+      box-sizing: border-box;
+    }
+
+
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    
+
+    .slide {
+      display: none;
+      width: 100%;
+    }
+
+    .slide img {
+      width: 100%;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .prev, .next {
+      position: absolute;
+      top: 0;
+      width: 40%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.2);
+      color: white;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .prev { left: 0; opacity: 0; }
+    .next { right: 0; opacity: 0;}
+
+
+    .pause-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 20%;
+      height: 70%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(0, 0, 0, 0.7);
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 20;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .dots {
+      position: absolute;
+      top: 10px; /* Adjust this value to control how high the dots appear */
+      width: 100%;
+      text-align: center;
+      z-index: 2; /* Ensures dots appear above the images */
+    }
+    
+    .dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin: 0 5px;
+      background-color: #bbb;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .dot.active {
+      background-color: #717171;
+    }
+    
+    
+
+    body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+  background-size: 400% 400%;
+  animation: backgroundShift 10s ease infinite;
+  margin: 0;
+}
+
+.message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+}
+
+.message-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  max-width: 90%;
+  width: 400px;
+}
+
+.slideshow-container {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 120px; /* Added space to prevent overlap with the audio player */
+}
+
+.love-audio-player {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  background: pink;
+  padding: 12px 20px;
+  border-radius: 20px;
+  gap: 10px;
+  box-shadow: 0px 4px 10px rgba(255, 105, 180, 0.5);
+  width: 340px;
+  z-index: 10; /* Ensures the audio player stays above other elements */
+}
+
+
+
+    #closeButton {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      border-radius: 4px;
+    }
+
+    #closeButton:hover {
+      background-color: #0056b3;
+    }
+      @keyframes floatText {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
       }
-  
-  
-      @keyframes backgroundShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+      @keyframes fadeInZoom {
+          0% { opacity: 0; transform: scale(0.8); }
+          100% { opacity: 1; transform: scale(1); }
       }
-  
+      @keyframes sparkles {
+          0% { opacity: 0; transform: scale(0.5); }
+          50% { opacity: 1; transform: scale(1.2); }
+          100% { opacity: 0; transform: scale(0.5); }
+      }
+      .sparkle {
+          position: absolute;
+          width: 10px;
+          height: 10px;
+          background: gold;
+          border-radius: 50%;
+          animation: sparkles 1s infinite ease-in-out;
+      }
+      .container {
+          margin-top: 50px;
+      }
+      button {
+          background-color: pink;
+          border: none;
+          padding: 10px 20px;
+          font-size: 18px;
+          cursor: pointer;
+          border-radius: 5px;
+      }
+      .hidden {
+          display: none;
+          font-size: 20px;
+          color: red;
+          margin-top: 20px;
+      }
+      .flicker_text {
+          position: fixed;
+          bottom: 12%; 
+          left: 15%; 
+          transform: translateX(-40%);
+          font-size: 2vw; 
+          text-align: center; 
+          display: flex;
+          flex-direction: column; 
+          align-items: center;
+          justify-content: center; 
+          width: 100%; 
+      }
       
-  
-      .slide {
-        display: none;
-        width: 100%;
-      }
-  
-      .slide img {
-        width: 100%;
-        display: block;
-        border-radius: 20px;
-      }
-  
-      .prev, .next {
-        position: absolute;
-        top: 0;
-        width: 40%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-        color: white;
-        font-size: 24px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        z-index: 10;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-  
-      .prev { left: 0; opacity: 0; }
-      .next { right: 0; opacity: 0;}
-  
-  
-      .pause-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 20%;
-        height: 70%;
-        transform: translate(-50%, -50%);
-        background-color: rgba(0, 0, 0, 0.7);
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        z-index: 20;
-        opacity: 0;
-        transition: opacity 0.3s ease;
+      button {
+          background: #ff4d6d;
+          border: none;
+          color: white;
+          font-size: 24px;
+          padding: 10px 12px;
+          border-radius: 50%;
+          cursor: pointer;
+          transition: 0.3s;
       }
       
-      .dots {
+      .message:hover{
+          background-color: #ef74a9;
+          color:white;
+      }
+      .playbtn:hover {
+          background: url('kripa.jpg') center/cover no-repeat;
+      }
+      #nextBtn:hover {
+          background: url('kripa5.jpg') center/cover no-repeat;
+      }
+      #previousBtn:hover {
+          background: url('kripa4.jpg') center/cover no-repeat;
+      }
+      .seek-bar {
+          width: 200px;
+          height: 8px;
+          background: #ccc;
+          border-radius: 5px;
+          margin: 10px;
+          cursor: pointer;
+          position: relative;
+      }
+      
+      .seek-bar-filled {
+          height: 100%;
+          background: red;
+          border-radius: 5px;
+          width: 0%; /* Start with 0% width */
+      }
+      
+      .flicker {
+          animation: flicker 1s infinite;
+      }
+      
+      @keyframes flicker {
+          0% { opacity: 1; }
+          50% { opacity: 0.5; }
+          100% { opacity: 1; }
+      }
+      
+      @keyframes rotate {
+          from {
+              transform: rotate(0deg);
+          }
+          to {
+              transform: rotate(360deg);
+          }
+      }
+      
+      .rotate {
+          animation: rotate 3s linear infinite; 
+      }
+      
+      #timeDisplay {
+          font-family: Arial, sans-serif;
+          font-size: 14px;
+          color: #d63384;
+      }
+      .with-image {
+          background: url('kripa.jpg') center/cover no-repeat;
+          color: transparent; /* Hide text if needed */
+      }
+      .with-image2 {
+          background: url('kripa2.jpg') center/cover no-repeat;
+          color: transparent; /* Hide text if needed */
+      }
+      .with-image3 {
+          background: url('kripa5.jpg') center/cover no-repeat;
+          color: transparent; /* Hide text if needed */
+      }
+      .with-image4 {
+          background: url('kripa4.jpg') center/cover no-repeat;
+          color: transparent; /* Hide text if needed */
+      }
+      /* Fade animation */
+      .fade-in {
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      /* Caption styling */
+      #caption {
         position: absolute;
-        top: 10px; /* Adjust this value to control how high the dots appear */
+        bottom: 10%;
         width: 100%;
         text-align: center;
-        z-index: 2; /* Ensures dots appear above the images */
-      }
-      
-      .dot {
-        display: inline-block;
-        width: 12px;
-        height: 12px;
-        margin: 0 5px;
-        background-color: #bbb;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-      
-      .dot.active {
-        background-color: #717171;
-      }
-      
-      
-  
-      body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
-    background-size: 400% 400%;
-    animation: backgroundShift 10s ease infinite;
-    margin: 0;
-  }
-  
-  .message-box {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 1000;
-  }
-  
-  .message-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: left;
-    max-width: 90%;
-    width: 400px;
-  }
-  
-  .slideshow-container {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 120px; /* Added space to prevent overlap with the audio player */
-  }
-  
-  .love-audio-player {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    background: pink;
-    padding: 12px 20px;
-    border-radius: 20px;
-    gap: 10px;
-    box-shadow: 0px 4px 10px rgba(255, 105, 180, 0.5);
-    width: 340px;
-    z-index: 10; /* Ensures the audio player stays above other elements */
-  }
-  
-  
-  
-      #closeButton {
-        padding: 10px 20px;
-        font-size: 16px;
-        cursor: pointer;
-        border: none;
-        background-color: #007BFF;
+        font-size: 1.2rem;
         color: white;
-        border-radius: 4px;
+        font-weight: bold;
+        text-shadow: 1px 1px 4px #000;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
       }
-  
-      #closeButton:hover {
-        background-color: #0056b3;
+
+      #caption.show {
+        opacity: 1;
       }
-        @keyframes floatText {
-            0% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0); }
-        }
-        @keyframes fadeInZoom {
-            0% { opacity: 0; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        @keyframes sparkles {
-            0% { opacity: 0; transform: scale(0.5); }
-            50% { opacity: 1; transform: scale(1.2); }
-            100% { opacity: 0; transform: scale(0.5); }
-        }
-        .sparkle {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: gold;
-            border-radius: 50%;
-            animation: sparkles 1s infinite ease-in-out;
-        }
-        .container {
-            margin-top: 50px;
-        }
-        button {
-            background-color: pink;
-            border: none;
-            padding: 10px 20px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .hidden {
-            display: none;
-            font-size: 20px;
-            color: red;
-            margin-top: 20px;
-        }
-        .flicker_text {
-            position: fixed;
-            bottom: 12%; 
-            left: 15%; 
-            transform: translateX(-40%);
-            font-size: 2vw; 
-            text-align: center; 
-            display: flex;
-            flex-direction: column; 
-            align-items: center;
-            justify-content: center; 
-            width: 100%; 
-        }
-        
-        button {
-            background: #ff4d6d;
-            border: none;
-            color: white;
-            font-size: 24px;
-            padding: 10px 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        
-        .message:hover{
-            background-color: #ef74a9;
-            color:white;
-        }
-        .playbtn:hover {
-            background: url('kripa.jpg') center/cover no-repeat;
-        }
-        #nextBtn:hover {
-            background: url('kripa5.jpg') center/cover no-repeat;
-        }
-        #previousBtn:hover {
-            background: url('kripa4.jpg') center/cover no-repeat;
-        }
-        .seek-bar {
-            width: 200px;
-            height: 8px;
-            background: #ccc;
-            border-radius: 5px;
-            margin: 10px;
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .seek-bar-filled {
-            height: 100%;
-            background: red;
-            border-radius: 5px;
-            width: 0%; /* Start with 0% width */
-        }
-        
-        .flicker {
-            animation: flicker 1s infinite;
-        }
-        
-        @keyframes flicker {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-        
-        @keyframes rotate {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        
-        .rotate {
-            animation: rotate 3s linear infinite; 
-        }
-        
-        #timeDisplay {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: #d63384;
-        }
-        .with-image {
-            background: url('kripa.jpg') center/cover no-repeat;
-            color: transparent; /* Hide text if needed */
-        }
-        .with-image2 {
-            background: url('kripa2.jpg') center/cover no-repeat;
-            color: transparent; /* Hide text if needed */
-        }
-        .with-image3 {
-            background: url('kripa5.jpg') center/cover no-repeat;
-            color: transparent; /* Hide text if needed */
-        }
-        .with-image4 {
-            background: url('kripa4.jpg') center/cover no-repeat;
-            color: transparent; /* Hide text if needed */
-        }
+      /* --- your existing CSS here --- */
+
+/* GAME CANVAS */
+#gameCanvas {
+border: 2px solid white;
+border-radius: 10px;
+background-color: #fcd5ce;
+display: block;
+margin: auto;
+}
+
+/* QUESTION BOX */
+#questionBox {
+background: white;
+border-radius: 10px;
+padding: 20px;
+position: absolute;
+top: 20%;
+left: 50%;
+transform: translateX(-50%);
+width: 300px;
+text-align: center;
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+z-index: 1000;
+}
+
+#questionBox button {
+display: block;
+width: 100%;
+margin: 5px 0;
+background: pink;
+border: none;
+padding: 10px;
+border-radius: 5px;
+font-size: 16px;
+}
+
+.hidden {
+display: none;
+}
