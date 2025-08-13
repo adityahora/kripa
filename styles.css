@@ -354,7 +354,7 @@
 /* Optional: limit player's movement bounds on smaller screens */
 @media (max-width: 480px) {
   #gameCanvas {
-    height: 400px;
+    height: 350px;
   }
 }
 
