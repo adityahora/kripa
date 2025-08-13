@@ -352,10 +352,11 @@
 
 
 /* Optional: limit player's movement bounds on smaller screens */
-@media (max-width: 480px) {
+@media (max-width: 500px) {
   #gameCanvas {
     height: 400px;
-    width :400px;
+    width : 400px;
+
   }
 }
 
@@ -388,8 +389,7 @@ font-size: 16px;
 .hidden {
 display: none;
 }
-
-
-
-
-
+video{
+  aspect-ratio: 1/1; 
+  width: 100%; 
+}
