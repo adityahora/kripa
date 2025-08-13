@@ -213,7 +213,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 120, height: 80, speed: 9 };
+let player = { x: 50, y: 300, width: 100, height: 67, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -362,7 +362,7 @@ function drawHearts() {
 
     ctx.beginPath();
     // ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle)
-    ctx.ellipse(h.x, h.y, h.size, h.size*0.6, 0, 0, Math.PI * 2);
+    ctx.ellipse(h.x, h.y, h.size, h.size*0.56, 0, 0, Math.PI * 2);
     ctx.clip();
 
     // Draw the heart image centered at (h.x, h.y)
