@@ -213,7 +213,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 100, height: 70, speed: 9 };
+let player = { x: 50, y: 300, width: 100, height: 100, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -328,7 +328,7 @@ function spawnHeart() {
   hearts.push({
     x: canvas.width,
     y: Math.random() * (canvas.height - 50),
-    size: 50
+    size: 40
   });
 }
 
@@ -357,7 +357,7 @@ function drawHearts() {
     ctx.clip();
 
     // Draw the heart image centered at (h.x, h.y) with width/height = 2 * size
-    ctx.drawImage(heartImg, h.x - 1.2*h.size, h.y - h.size, h.size * 2, h.size * 2);
+    ctx.drawImage(heartImg, h.x - h.size, h.y - h.size, h.size * 2, h.size * 2);
 
     ctx.restore();
   });
@@ -482,6 +482,7 @@ playerImg.onload = () => {
     gameLoop();  // start the game loop after images are loaded
   }
 }
+
 
 
 
