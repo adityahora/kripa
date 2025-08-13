@@ -355,6 +355,7 @@
 @media (max-width: 480px) {
   #gameCanvas {
     height: 350px;
+    width :100%;
   }
 }
 
