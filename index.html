@@ -9,65 +9,92 @@
 <body>
     <body>
     
-        <div id="messageBox" class="message-box">
-            <div class="message-content">
-              <p id="messageText">Ahem! Ahem! So Read this carefully kripa babes!
-                After you press the close button the slideshow starts. The slideshow is 
-                automatic hence changes by itself within a certain time interval, but you can 
-                also go on next and previous image by clicking on left and right side of images 
-                respectfully. Also you can pause the slideshow by clicking on the middle of the 
-                image. Enjoyyyy!!!! <br><br>
-                PS : Click the heart below for better experience <br> <br>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Love Aaditya
-              </p>
-              <button id="closeButton">Close</button>
-            </div>
-          </div>
-        
-          <!-- Slideshow -->
-          <div class="slideshow-container">
-            <div class="slide">
-              <img src="./kripa.jpg" alt="Slide 1" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
-            </div>
-            <div class="slide">
-              <img src="./kripabg.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
-            </div>
-            <div class="slide">
-              <img src="./kripaaudioplayer.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
-            </div>
-        
-            <a id="pslide" class="prev" onclick="changeSlide(-1)">&#10094;</a>
-            <button class="pause-btn" onclick="togglePause()"></button>
-            <a class="next" onclick="changeSlide(1)">&#10095;</a>
-          </div>
-        
-          <div class="dots">
-            <span class="dot" onclick="currentSlide(1)"></span>
-            <span class="dot" onclick="currentSlide(2)"></span>
-            <span class="dot" onclick="currentSlide(3)"></span>
-          </div>
-            
-            <div class="flicker_text">
-                <p id="flick" style="color:red; font-size:20px;" class="flicker">click the heart!!!</p>
-            </div>
-            <div class="love-audio-player">
-                <button class="hidden" id="previousBtn" onclick="prevSong()">⬅️</button>
-                <button class="nxtBtn" id="playPauseBtn" onclick="hover_text()">❤️</button>
-                <button class="hidden" id="nextBtn" onclick="nextSong()">➡️</button>
-                <span id="timeDisplay" class="hidden">00:00</span>
-                <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
-                    <div class="seek-bar-filled" id="seek-bar-filled"></div>
-                </div>
-                <audio id="audio">
-                    <source src="psiloveyou.mp3" type="audio/mpeg">
-                </audio>
-            </div>
+      <div id="messageBox" class="message-box">
+        <div class="message-content">
+          <p id="messageText">
+            Let's play a game!!!!<br><br>
+    
+            Use your icon to collect my pictures.<br>
+            You can control it by touching/dragging your icon with your finger!<br>
+            Enjoy!<br>
+    
+            Also Click the heart below for better experience!!
+          </p>
+          <button id="closeButton">Close</button>
         </div>
+      </div>
+      <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="400"></canvas>
+        <div id="questionBox" class="hidden">
+          <h2 id="questionText">Question here</h2>
+          <div id="choices"></div>
+          <p id="feedback" class="hidden"></p>
+        </div>
+      </div>
+      
+      
+      <!-- Slideshow -->
+      <div id="slideshowContainer" class="slideshow-container" style="display:none">
+    
+        <div id="caption" class="caption"></div>
+    
+        <div class="slide">
+          <img src="./kripa.jpg" alt="Slide 1" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+        </div>
+        <div class="slide">
+          <img src="./kripabg.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+        </div>
+        <div class="slide">
+          <img src="./kripaaudioplayer.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+        </div>
+        <div class="slide">
+            <img src="./kripa2.jpg" alt="Slide 2" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" />
+          </div>
+          <div class="slide" data-caption="HAHAHAHHAHHAHAHAHA.">
+            <img src="player.png" alt="Image Slide" />
+          </div>
+          
+          <div class="slide" data-caption="MY FAVOURITEE">
+            <video src="video1.mp4" playsinline></video>
+          </div>
+          
+          <div class="slide">
+            <video src="video2.mp4" autoplay  loop playsinline></video>
+    
+            <!-- <img src="./kripatextdisplay.jpg" alt="Slide 3" onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Image+Not+Found';" /> -->
+          </div>
+    
+        <a id="pslide" class="prev" onclick="changeSlide(-1)">&#10094;</a>
+        <button class="pause-btn" onclick="togglePause()"></button>
+        <a class="next" onclick="changeSlide(1)">&#10095;</a>
+      </div>
+    
+      <div class="dots" id="dots" style="display:none">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+        <span class="dot" onclick="currentSlide(7)"></span>
+      </div>
+        
+        <div class="flicker_text">
+            <p id="flick" style="color:red; font-size:20px;" class="flicker">click the heart!!!</p>
+        </div>
+        <div class="love-audio-player">
+            <button class="hidden" id="previousBtn" onclick="prevSong()">⬅️</button>
+            <button class="nxtBtn" id="playPauseBtn" onclick="hover_text()">❤️</button>
+            <button class="hidden" id="nextBtn" onclick="nextSong()">➡️</button>
+            <span id="timeDisplay" class="hidden">00:00</span>
+            <div class="seek-bar" id="seekBar" onclick="setSeek(event)" style="display: none;">
+                <div class="seek-bar-filled" id="seek-bar-filled"></div>
+            </div>
+            <audio id="audio">
+                <source src="psiloveyou.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+    </div>
     <script src="scripts.js"></script>
 </body>
 </html>
