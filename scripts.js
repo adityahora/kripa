@@ -213,7 +213,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 100, height: 100, speed: 9 };
+let player = { x: 50, y: 300, width: 110, height: 80, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -321,30 +321,38 @@ const playerImg = new Image();
 playerImg.src = "player.png";  // put the correct path
 
 const heartImg = new Image();
-heartImg.src = "heart.png";    // put the correct path
+heartImg.src = "heart.jpg";    // put the correct path
 
 // Create hearts
 function spawnHeart() {
   hearts.push({
     x: canvas.width,
     y: Math.random() * (canvas.height - 50),
-    size: 40
+    size: 50
   });
 }
 
 function drawPlayer() {
   ctx.save(); // Save current canvas state
-  
-  // Create a circular clipping region
+
+  // Create an elliptical clipping region
   ctx.beginPath();
-  ctx.arc(player.x + player.width / 2, player.y + player.height / 2, player.width / 2, 0, Math.PI * 2);
+  ctx.ellipse(
+    player.x + player.width / 2,  // centerX
+    player.y + player.height / 2, // centerY
+    player.width / 2,             // radiusX (horizontal radius)
+    player.height / 2,            // radiusY (vertical radius)
+    0,                            // rotation
+    0, Math.PI * 2                 // startAngle, endAngle
+  );
   ctx.clip();
 
-  // Draw the image clipped inside the circle
+  // Draw the image clipped inside the ellipse
   ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
 
   ctx.restore(); // Restore canvas state (removes clipping)
 }
+
 
 
 function drawHearts() {
@@ -353,10 +361,11 @@ function drawHearts() {
     ctx.save();
 
     ctx.beginPath();
-    ctx.arc(h.x, h.y, h.size, 0, Math.PI * 2);
+    // ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle)
+    ctx.ellipse(h.x, h.y, h.size, h.size*0.68, 0, 0, Math.PI * 2);
     ctx.clip();
 
-    // Draw the heart image centered at (h.x, h.y) with width/height = 2 * size
+    // Draw the heart image centered at (h.x, h.y)
     ctx.drawImage(heartImg, h.x - h.size, h.y - h.size, h.size * 2, h.size * 2);
 
     ctx.restore();
@@ -368,9 +377,9 @@ function drawHearts() {
 function update() {
   if (!gamePaused) {
     frame++;
-    if (frame % 320 === 0) spawnHeart();
+    if (frame % 50 === 0) spawnHeart();
 
-    hearts.forEach(h => h.x -= 3);
+    hearts.forEach(h => h.x -= 4.5);
     hearts = hearts.filter(h => h.x + h.size > 0);
 
     hearts.forEach((h, i) => {
@@ -380,9 +389,9 @@ function update() {
           player.y + player.height > h.y) {
         score++;
         hearts.splice(i, 1);
-        if (score % 5 === 0) showQuestion();
+        if (score % 15 === 0) showQuestion();
 
-        if(score === 26){
+        if(score === 80){
           // End game and show slideshow
           document.getElementById("gameContainer").style.display = 'none';
 
@@ -447,7 +456,7 @@ function showQuestion() {
         currentQuestionIndex++;
         questionBox.classList.add("hidden");
         gamePaused = false;
-        if (score >= 26) endGame();
+        if (score >= 80) endGame();
       } else {
         feedback.textContent = "😢 Try again!";
         feedback.classList.remove("hidden");
@@ -482,7 +491,3 @@ playerImg.onload = () => {
     gameLoop();  // start the game loop after images are loaded
   }
 }
-
-
-
-
