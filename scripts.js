@@ -221,79 +221,69 @@ let currentQuestionIndex = 0;
 let gamePaused = false;
 
 // Mouse drag start
-canvas.addEventListener('mousedown', (e) => {
+function getMousePos(evt) {
   const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
+  const scaleX = canvas.width / rect.width;   // ratio between internal and displayed width
+  const scaleY = canvas.height / rect.height; // ratio between internal and displayed height
 
-  // Check if mouse is inside the player box
-  if (mouseX >= player.x && mouseX <= player.x + player.width &&
-      mouseY >= player.y && mouseY <= player.y + player.height) {
+  return {
+    x: (evt.clientX - rect.left) * scaleX,
+    y: (evt.clientY - rect.top) * scaleY
+  };
+}
+
+function getTouchPos(touchEvent) {
+  const rect = canvas.getBoundingClientRect();
+  const scaleX = canvas.width / rect.width;
+  const scaleY = canvas.height / rect.height;
+  
+  const touch = touchEvent.touches[0];
+  return {
+    x: (touch.clientX - rect.left) * scaleX,
+    y: (touch.clientY - rect.top) * scaleY
+  };
+}
+
+// Then use these functions inside your dragging handlers
+
+canvas.addEventListener('mousedown', e => {
+  const pos = getMousePos(e);
+  if (pos.x >= player.x && pos.x <= player.x + player.width &&
+      pos.y >= player.y && pos.y <= player.y + player.height) {
     dragging = true;
-    dragOffsetX = mouseX - player.x;
-    dragOffsetY = mouseY - player.y;
   }
 });
 
-// Mouse drag move
-canvas.addEventListener('mousemove', (e) => {
-  if (!dragging) return;
-  const rect = canvas.getBoundingClientRect();
-  const mouseX = e.clientX - rect.left;
-  const mouseY = e.clientY - rect.top;
-
-  player.x = mouseX - dragOffsetX;
-  player.y = mouseY - dragOffsetY;
-
-  clampPlayerPosition();
-});
-
-// Mouse drag end
-canvas.addEventListener('mouseup', () => {
-  dragging = false;
-});
-
-canvas.addEventListener('mouseleave', () => {
-  dragging = false;
-});
-
-// Touch drag start
-canvas.addEventListener('touchstart', (e) => {
-  const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
-  const touchX = touch.clientX - rect.left;
-  const touchY = touch.clientY - rect.top;
-
-  if (touchX >= player.x && touchX <= player.x + player.width &&
-      touchY >= player.y && touchY <= player.y + player.height) {
-    dragging = true;
-    dragOffsetX = touchX - player.x;
-    dragOffsetY = touchY - player.y;
+canvas.addEventListener('mousemove', e => {
+  if (dragging) {
+    const pos = getMousePos(e);
+    player.x = pos.x - player.width / 2;
+    player.y = pos.y - player.height / 2;
   }
 });
 
-// Touch drag move
-canvas.addEventListener('touchmove', (e) => {
-  if (!dragging) return;
-  e.preventDefault(); // Prevent scrolling while dragging
-
-  const rect = canvas.getBoundingClientRect();
-  const touch = e.touches[0];
-  const touchX = touch.clientX - rect.left;
-  const touchY = touch.clientY - rect.top;
-
-  player.x = touchX - dragOffsetX;
-  player.y = touchY - dragOffsetY;
-
-  clampPlayerPosition();
-});
-
-// Touch drag end
-canvas.addEventListener('touchend', () => {
+canvas.addEventListener('mouseup', e => {
   dragging = false;
 });
 
-canvas.addEventListener('touchcancel', () => {
+canvas.addEventListener('touchstart', e => {
+  const pos = getTouchPos(e);
+  if (pos.x >= player.x && pos.x <= player.x + player.width &&
+      pos.y >= player.y && pos.y <= player.y + player.height) {
+    dragging = true;
+  }
+});
+
+canvas.addEventListener('touchmove', e => {
+  if (dragging) {
+    e.preventDefault(); // prevent scrolling while dragging
+    const pos = getTouchPos(e);
+    player.x = pos.x - player.width / 2;
+    player.y = pos.y - player.height / 2;
+  }
+}, { passive: false });
+
+canvas.addEventListener('touchend', e => {
   dragging = false;
 });
 
@@ -492,4 +482,3 @@ playerImg.onload = () => {
     gameLoop();  // start the game loop after images are loaded
   }
 }
-
