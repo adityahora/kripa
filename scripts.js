@@ -46,20 +46,27 @@ const formatTime = (time) => {
   return `${minutes}:${seconds}`;
 };
 
-// Event Listeners
+let audioManuallyPaused = false;
+let audioSystemPaused = false;
+
 playPauseBtn.addEventListener("click", () => {
   if (audio.paused) {
-    audio.play();
+    audio.play().catch(() => {});
+    audioManuallyPaused = false;
+
+    // Show UI elements
     prevBtn.classList.remove("hidden");
-    document.getElementById("flick").classList.add("hidden");
     nextBtn.classList.remove("hidden");
+    flick.classList.add("hidden");
     timeDisplay.classList.remove("hidden");
     seekBar.style.display = "block";
   } else {
     audio.pause();
+    audioManuallyPaused = true;
   }
   updatePlayPauseButton(!audio.paused);
 });
+
 
 audio.addEventListener("timeupdate", () => {
   const progress = (audio.currentTime / audio.duration) * 100;
@@ -92,46 +99,46 @@ const dots = document.getElementsByClassName("dot");
 
 function showSlide(n) {
   for (const slide of slides) {
-    // Pause any video in hidden slides
     const video = slide.querySelector("video");
     if (video) {
       video.pause();
       video.currentTime = 0;
     }
-
-    // Remove fade class and hide
-    slide.classList.remove("fade-in");
     slide.style.display = "none";
+    slide.classList.remove("fade-in");
   }
-
   for (const dot of dots) dot.classList.remove("active");
 
   slideIndex = (n + slides.length) % slides.length;
   const currentSlide = slides[slideIndex];
   currentSlide.style.display = "block";
-  void currentSlide.offsetWidth; // Trigger reflow for CSS animation
+  void currentSlide.offsetWidth;
   currentSlide.classList.add("fade-in");
-
   dots[slideIndex].classList.add("active");
 
-  // Handle caption display
   const caption = document.getElementById("caption");
   caption.innerText = currentSlide.getAttribute("data-caption") || "";
   caption.classList.add("show");
 
-  // Autoplay video if present
   const currentVideo = currentSlide.querySelector("video");
   if (currentVideo) {
+    // Pause audio if playing
+    if (!audio.paused) {
+      audio.pause();
+      updatePlayPauseButton(false);
+      audioSystemPaused = true;
+    }
     currentVideo.muted = false;
-    const playPromise = currentVideo.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.warn("Autoplay with sound blocked:", error);
-      });
+    currentVideo.play().catch(err => console.warn("Video autoplay blocked:", err));
+  } else {
+    // Resume audio if it was system-paused and user didn't manually pause
+    if (audioSystemPaused && !audioManuallyPaused) {
+      audio.play().catch(err => console.warn("Audio resume blocked:", err));
+      updatePlayPauseButton(true);
+      audioSystemPaused = false;
     }
   }
 
-  // Handle hiding pslide if needed
   document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
 }
 
@@ -149,7 +156,7 @@ function currentSlide(n) {
 
 function startAutoSlide() {
   clearInterval(slideInterval);
-  slideInterval = setInterval(() => showSlide(slideIndex + 1), 10000);
+  slideInterval = setInterval(() => showSlide(slideIndex + 1), 20000);
 }
 
 function togglePause() {
@@ -213,7 +220,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 100, height: 67, speed: 9 };
+let player = { x: 50, y: 300, width: 110, height: 80, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -362,7 +369,7 @@ function drawHearts() {
 
     ctx.beginPath();
     // ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle)
-    ctx.ellipse(h.x, h.y, h.size, h.size*0.56, 0, 0, Math.PI * 2);
+    ctx.ellipse(h.x, h.y, h.size, h.size*0.68, 0, 0, Math.PI * 2);
     ctx.clip();
 
     // Draw the heart image centered at (h.x, h.y)
@@ -379,7 +386,7 @@ function update() {
     frame++;
     if (frame % 50 === 0) spawnHeart();
 
-    hearts.forEach(h => h.x -= 5.27);
+    hearts.forEach(h => h.x -= 4.5);
     hearts = hearts.filter(h => h.x + h.size > 0);
 
     hearts.forEach((h, i) => {
