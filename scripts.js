@@ -157,7 +157,7 @@ function currentSlide(n) {
 
 function startAutoSlide() {
   clearInterval(slideInterval);
-  slideInterval = setInterval(() => showSlide(slideIndex + 1), 20000);
+  slideInterval = setInterval(() => showSlide(slideIndex + 1), 60000);
 }
 
 function togglePause() {
