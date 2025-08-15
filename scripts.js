@@ -120,6 +120,27 @@ function showSlide(n) {
   caption.innerText = currentSlide.getAttribute("data-caption") || "";
   caption.classList.add("show");
 
+const currentVideo = currentSlide.querySelector("video");
+  if (currentVideo) {
+    // Pause audio if playing
+    if (!audio.paused) {
+      audio.pause();
+      updatePlayPauseButton(false);
+      audioSystemPaused = true;
+    }
+    currentVideo.muted = false;
+    currentVideo.play().catch(err => console.warn("Video autoplay blocked:", err));
+  } else {
+    // Resume audio if it was system-paused and user didn't manually pause
+    if (audioSystemPaused && !audioManuallyPaused) {
+      audio.play().catch(err => console.warn("Audio resume blocked:", err));
+      updatePlayPauseButton(true);
+      audioSystemPaused = false;
+    }
+  }
+
+  document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
+}
   
 
 function changeSlide(n) {
@@ -169,27 +190,7 @@ function togglePause() {
   pauseButton.style.opacity = '1';
   setTimeout(() => pauseButton.style.opacity = '0', 700);
 }
-const currentVideo = currentSlide.querySelector("video");
-  if (currentVideo) {
-    // Pause audio if playing
-    if (!audio.paused) {
-      audio.pause();
-      updatePlayPauseButton(false);
-      audioSystemPaused = true;
-    }
-    currentVideo.muted = false;
-    currentVideo.play().catch(err => console.warn("Video autoplay blocked:", err));
-  } else {
-    // Resume audio if it was system-paused and user didn't manually pause
-    if (audioSystemPaused && !audioManuallyPaused) {
-      audio.play().catch(err => console.warn("Audio resume blocked:", err));
-      updatePlayPauseButton(true);
-      audioSystemPaused = false;
-    }
-  }
 
-  document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
-}
 window.onload = function() {
   // Show first slide but do NOT autoplay yet
   showSlide(slideIndex);
