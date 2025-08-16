@@ -9,15 +9,24 @@ const flick = document.getElementById("flick");
 const message = document.getElementById("message");
 const progressBar = document.querySelector(".seek-bar");
 
+
 // Song data
-const songs = [
+songs = [
+  "inagoodway.mp3",
+  "juna.mp3",
+  "gluesong.mp3",
   "psiloveyou.mp3",
   "japanesedemin.mp3",
   "prettyboy.mp3",
   "overthemoon.mp3",
   "getyou.mp3",
-  "gluesong.mp3",
 ];
+
+
+
+
+
+
 let currentSongIndex = 0;
 
 // Helper Functions
@@ -120,7 +129,7 @@ function showSlide(n) {
   caption.innerText = currentSlide.getAttribute("data-caption") || "";
   caption.classList.add("show");
 
-const currentVideo = currentSlide.querySelector("video");
+  const currentVideo = currentSlide.querySelector("video");
   if (currentVideo) {
     // Pause audio if playing
     if (!audio.paused) {
@@ -141,7 +150,6 @@ const currentVideo = currentSlide.querySelector("video");
 
   document.getElementById("pslide").classList.toggle("hidden", slideIndex === 0);
 }
-  
 
 function changeSlide(n) {
   clearInterval(slideInterval); // Stop autoplay while manually changing
@@ -221,7 +229,7 @@ const questionText = document.getElementById("questionText");
 const choicesDiv = document.getElementById("choices");
 const feedback = document.getElementById("feedback");
 
-let player = { x: 50, y: 300, width: 110, height: 80, speed: 9 };
+let player = { x: 50, y: 300, width: 115, height: 70, speed: 9 };
 let hearts = [];
 let score = 0;
 let frame = 0;
@@ -318,8 +326,8 @@ const questions = [
     correct: 0
   },
   {
-    text: "What's my favourite song?",
-    choices: ["Let Down", "Lover you should have come over", "Najeek"],
+    text: "What's my favourite colour?",
+    choices: ["Red", "Green", "Blue"],
     correct: 2
   }
 
@@ -370,7 +378,7 @@ function drawHearts() {
 
     ctx.beginPath();
     // ellipse(centerX, centerY, radiusX, radiusY, rotation, startAngle, endAngle)
-    ctx.ellipse(h.x, h.y, h.size, h.size*0.68, 0, 0, Math.PI * 2);
+    ctx.ellipse(h.x, h.y, h.size, h.size*0.64, 0, 0, Math.PI * 2);
     ctx.clip();
 
     // Draw the heart image centered at (h.x, h.y)
